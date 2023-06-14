@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currículo</title>
+    <link rel="stylesheet" href="./estilo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="principal">
+        <div class="esquerda">
+            <div class="perfil">
+                <div class="imagem"><img src="foto_taylor.jpg" alt="imagem Taylor" id="img"></div>
+                <div class="nome-profissao">
+                    <h1>Taylor Swift</h1>
+                    <h2>Cantora</h2>
+                </div>
+            </div>
+            <div class="contatos">
+                <h1>Contatos</h1>
+                <h4>www.linkedin.com/taylor-swift</h4>
+                <h4>+1 408 123-4567</h4>
+                <h4>@taylorswift</h4>
+                <h4>taylorswift@gmail.com</h4>
+            </div>
+            <div class="formacoes">
+                <h1>Formações</h1>
+                <h4>2022</h4>
+                <h4>Doutorado em Belas Artes</h4>
+                <h4>University of New York</h4>
+                <br>
+                <br>
+                <h4></h4>
+                <h4></h4>
+                <h4></h4>
+            </div>
+        </div>
+
+        <div class="direita">
+            <button id="btn" class="btn">Mudar cor</button>
+            <div class="descricao">
+                <h1>Descrição</h1>
+                <p>Taylor Swift sang about the joy and pain of adolescence on her way to becoming an international pop
+                    phenomenon. Her crossover success from country music darling to pop culture superstar happened
+                    seemingly happened overnight, yet Swift's prodigious natural talent, honest songwriting and
+                    cheerfully free spirit gave her staying power on the charts. Her sophomore album Fearless (2009)
+                    churned out one hit song after another, reached multi-platinum status, and won her numerous awards,
+                    including Country Music Association (CMA) Entertainer of the Year, which, as the title's youngest
+                    recipient, made CMA history. Far from a one-note, Swift displayed her acting skills as well in
+                    projects as varied as an episode of the drama "CSI: Crime Scene Investigation" (CBS, 2000-15) and as
+                    Taylor Lautner's love interest in the big screen romantic comedy, "Valentine's Day" (2010). A breath
+                    of fresh air amongst a crowd of party-hopping starlets, Swift's fairy tale life took a surreal turn
+                    at the 2009 MTV Video Music Awards after rapper Kanye West interrupted her acceptance speech.</p>
+            </div>
+            <div class="experiencia">
+                <h1>Experiências</h1>
+                <h4>2006-presente</h4>
+                <h4>Big Machine Records</h4>
+                <br>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. In tellus integer feugiat scelerisque varius. Velit laoreet id donec
+                    ultrices tincidunt arcu non sodales. Ut etiam sit amet nisl purus in. Egestas pretium aenean
+                    pharetra magna ac placerat. Semper quis lectus nulla at volutpat diam. Pellentesque id nibh tortor
+                    id aliquet lectus.</p>
+                <br>
+                <br>
+                <br>''
+                <h4>2004-2006</h4>
+                <h4>Sony</h4>
+                <br>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. In tellus integer feugiat scelerisque varius. Velit laoreet id donec
+                    ultrices tincidunt arcu non sodales. Ut etiam sit amet nisl purus in. Egestas pretium aenean
+                    pharetra magna ac placerat. Semper quis lectus nulla at volutpat diam. Pellentesque id nibh tortor
+                    id aliquet lectus.</p>
+            </div>
+            <div class="realizacoes">
+                <h1>Habilidade</h1>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#btn").on("click", botao)
+        let i = 0;
+        function botao() {
+            if (i == 0) {
+                $(".esquerda").css("background", "#e82e7b")
+                $(".direita").css("background", "#ed91e5")
+                $("body").css("background-color", "##86e7fc")
+                $(".btn").css("background-color", "#FF1475")
+
+                i += 1;
+            }
+            else {
+                $(".esquerda").css("background", "#D70270")
+                $(".direita").css("background", "#734F96")
+                $("body").css("background-color", "#0038A8")
+                $(".btn").css("background-color", "#D70270")
+
+                i -= 1;
+
+            }
+        }
+        $(document).ready(function () {
+            $("#img").click(function () {
+                $("#img").attr("src", "foto_taylor_2.jpg");
+            });
+
+            // URL base da API
+            var baseUrl = "http://127.0.0.1:3000";
+
+            $.ajax({
+                dataType: "json",
+                url: baseUrl + "/realizacoes",
+                method: "GET",
+                success: function (response) {
+                    response.forEach(function (realizacao) {
+                        let realizacao_element = `<h4>${realizacao.NOME_REALIZACOES}</h4>`;
+                        console.log(realizacao_element);
+                        $(".realizacoes").append(realizacao_element);
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
