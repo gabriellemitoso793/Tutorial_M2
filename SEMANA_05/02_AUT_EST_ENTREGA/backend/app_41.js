@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 const sqlite3 = require('sqlite3').verbose();
-const DBPATH = '../data/curriculo-ponderada.db';
+const DBPATH = 'curriculo-ponderada.sqlite';
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -32,7 +32,7 @@ app.get('/usuarios', (req, res) => {
 });
 
 // Retorna todos registros (é o R do CRUD - Read) - TABELA FORMAÇÕES
-app.get('/usuarios', (req, res) => {
+app.get('/formacoes', (req, res) => {
 	res.statusCode = 200;
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	var db = new sqlite3.Database(DBPATH); // Abre o banco
@@ -47,7 +47,7 @@ app.get('/usuarios', (req, res) => {
 });
 
 // Retorna todos registros (é o R do CRUD - Read) - TABELA EXPERIENCIAS
-app.get('/usuarios', (req, res) => {
+app.get('/experiencias', (req, res) => {
 	res.statusCode = 200;
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	var db = new sqlite3.Database(DBPATH); // Abre o banco
@@ -62,7 +62,7 @@ app.get('/usuarios', (req, res) => {
 });
 
 // Retorna todos registros (é o R do CRUD - Read) - TABELA HABILIDADES
-app.get('/usuarios', (req, res) => {
+app.get('/habilidades', (req, res) => {
 	res.statusCode = 200;
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	var db = new sqlite3.Database(DBPATH); // Abre o banco
@@ -77,7 +77,7 @@ app.get('/usuarios', (req, res) => {
 });
 
 // Retorna todos registros (é o R do CRUD - Read) - TABELA SOBRE MIM
-app.get('/usuarios', (req, res) => {
+app.get('/sobremim', (req, res) => {
 	res.statusCode = 200;
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	var db = new sqlite3.Database(DBPATH); // Abre o banco
@@ -92,7 +92,7 @@ app.get('/usuarios', (req, res) => {
 });
 
 // Retorna todos registros (é o R do CRUD - Read) - TABELA REALIZAÇÕES
-app.get('/usuarios', (req, res) => {
+app.get('/realizacoes', (req, res) => {
 	res.statusCode = 200;
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	var db = new sqlite3.Database(DBPATH); // Abre o banco
@@ -104,6 +104,21 @@ app.get('/usuarios', (req, res) => {
 			res.json(rows);
 		});
 		db.close(); // Fecha o banco
+});
+
+app.post('/realizacoes', (req, res) => {
+	res.statusCode = 200;
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	var db = new sqlite3.Database(DBPATH); // Abre o banco
+	var sql = "INSERT INTO tblRealizacoes (NOME_REALIZACOES, ID_USUARIO) VALUES ('" + req.body.nome + "', '1')";
+	db.run(sql, [],  err => {
+		if (err) {
+		    throw err;
+		}	
+	});
+	res.write('<p>REALIZACAO INSERIDA COM SUCESSO!</p><a href="/">VOLTAR</a>');
+	db.close(); // Fecha o banco
+	res.end();
 });
 
 // Insere um registro (é o C do CRUD - Create)
@@ -127,7 +142,7 @@ app.post('/insereFormacoes', urlencodedParser, (req, res) => {
 	res.statusCode = 200;
 	res.setHeader('Access-Control-Allow-Origin', '*'); 
 	var db = new sqlite3.Database(DBPATH); // Abre o banco
-	sqlFormacoes = "INSERT INTO tblFormacoes (NOME_FORMACOES, INSTITUICAO_FORMACOES, PERIODO_FORMACOES, DESCRICAO_FORMACOES) VALUES ('" + req.body.nome + "', '" + req.body.instituicao + "'" + req.body.periodo + "'," + req.body.descricao + "')";
+	var sql = "INSERT INTO tblFormacoes (NOME_FORMACOES, INSTITUICAO_FORMACOES, PERIODO_FORMACOES, DESCRICAO_FORMACOES) VALUES ('" + req.body.nome + "', '" + req.body.instituicao + "'" + req.body.periodo + "'," + req.body.descricao + "')";
 	console.log(sql);
 	db.run(sql, [],  err => {
 		if (err) {
